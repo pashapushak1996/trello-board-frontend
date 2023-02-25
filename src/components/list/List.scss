@@ -1,0 +1,33 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 1rem 0.5rem;
+
+  background-color: #ddd;
+  color: #1b262c;
+
+  border-radius: 8px;
+  box-shadow: 0 0 7px rgb(0 0 0 / 25%);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100%;
+
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: 18px;
+
+    margin-bottom: 0;
+  }
+
+  &__items {
+    width: 100%;
+  }
+}
