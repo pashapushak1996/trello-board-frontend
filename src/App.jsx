@@ -26,8 +26,9 @@ function App() {
     };
 
     const onClickAddList = () => {
-        dispatch(createList(newListTitle));
-
+        if (newListTitle) {
+            dispatch(createList(newListTitle));
+        }
         setNewListTitle('');
     };
 
@@ -60,7 +61,9 @@ function App() {
     const onClickCreate = () => {
         toggleModalVisibility();
 
-        dispatch(createCard(newTask));
+        if (newTask.title) {
+            dispatch(createCard(newTask));
+        }
 
         setNewTask({ title: '', listId: null });
     };
