@@ -25,4 +25,17 @@
   margin-bottom: 0;
 }
 
+.list-card__date {
+  font-size: 12px;
+}
 
+.list-card__button {
+  border: none;
+  outline: none;
+  padding: 3px 6px;
+  transition: background .1s, display .1s;
+  background-color: #aaa;
+  color: #e7e7e9;
+  font-size: .8rem;
+  border-radius: 4px;
+}

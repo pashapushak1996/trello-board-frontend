@@ -30,4 +30,25 @@
   &__items {
     width: 100%;
   }
+
+  &__button {
+    border: none;
+    outline: none;
+    padding: 3px 6px;
+    transition: background .1s, display .1s;
+    background-color: #aaa;
+    color: #e7e7e9;
+    font-size: .8rem;
+    border-radius: 4px;
+  }
+
+  &__button--add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: 6px;
+  }
 }

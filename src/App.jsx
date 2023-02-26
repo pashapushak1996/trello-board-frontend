@@ -1,420 +1,92 @@
-// https://trello-api-3avt.onrender.com
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Board } from './components/board/Board.jsx';
-
-const lists = [
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    },
-    {
-        _id: '63fa8854515cdfc4f85618c6',
-        title: 'Todo',
-        cards: [{
-            _id: '63fa89fb515cdfc4f85618c9',
-            title: 'Go to the interview',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:47.965Z',
-            updatedAt: '2023-02-25T22:21:47.965Z',
-            __v: 0
-        }, {
-            _id: '63fa8a06515cdfc4f85618cc',
-            title: 'watch videos',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:21:58.928Z',
-            updatedAt: '2023-02-25T22:21:58.928Z',
-            __v: 0
-        }, {
-            _id: '63fa8a0c515cdfc4f85618cf',
-            title: 'Done',
-            listId: '63fa8854515cdfc4f85618c6',
-            createdAt: '2023-02-25T22:22:04.323Z',
-            updatedAt: '2023-02-25T22:22:04.323Z',
-            __v: 0
-        }],
-        __v: 0
-    }
-];
+import { Header } from './components/header/index.js';
+import { CustomModal } from './components/modal/index.js';
+import {
+    createCard, createList, deleteCard, deleteList, fetchLists, getLists
+} from './features/listSlice.js';
 
 function App() {
-    return (
-        <div className="board">
-            <Board lists={ lists }/>
-        </div>);
+    const dispatch = useDispatch();
+    const lists = useSelector(getLists);
+
+    const [newTask, setNewTask] = useState({
+        title: '',
+        listId: null
+    });
+
+    const [newListTitle, setNewListTitle] = useState('');
+
+    const onListTitleChange = (e) => {
+        const { value } = e.target;
+
+        setNewListTitle(value);
+    };
+
+    const onClickAddList = () => {
+        dispatch(createList(newListTitle));
+
+        setNewListTitle('');
+    };
+
+    const [showModal, setShowModal] = useState(false);
+
+    useEffect(() => {
+        dispatch(fetchLists());
+    }, [dispatch]);
+
+    const toggleModalVisibility = () => {
+        setShowModal((prevState) => !prevState);
+    };
+
+    const onClickAddCard = (listId) => {
+        toggleModalVisibility();
+
+        setNewTask({ ...newTask, listId });
+    };
+
+    const onClickDeleteCard = (cardId, listId) => {
+        dispatch(deleteCard(cardId, listId));
+    };
+
+    const onTaskTitleChange = (e) => {
+        const { value } = e.target;
+
+        setNewTask({ ...newTask, title: value });
+    };
+
+    const onClickCreate = () => {
+        toggleModalVisibility();
+
+        dispatch(createCard(newTask));
+
+        setNewTask({ title: '', listId: null });
+    };
+
+    const onClickDeleteList = (listId) => {
+        dispatch(deleteList(listId));
+    };
+
+    return <div className={ 'app' }>
+        <Header
+            onChangeListValue={ onListTitleChange }
+            listValue={ newListTitle }
+            onClickAddList={ onClickAddList }/>
+        <CustomModal
+            showModal={ showModal }
+            handleShow={ toggleModalVisibility }
+            onClickCreate={ onClickCreate }
+            title={ 'What is the task?' }>
+            <input type="text" value={ newTask.title } onChange={ onTaskTitleChange }/>
+        </CustomModal>
+        <Board
+            onClickAddCard={ onClickAddCard }
+            onClickDeleteCard={ onClickDeleteCard }
+            onClickDeleteList={ onClickDeleteList }
+            lists={ lists }/>
+    </div>;
 }
 
 export default App;

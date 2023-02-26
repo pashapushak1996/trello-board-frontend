@@ -1,26 +1,46 @@
 import React from 'react';
+import { DraggableComponent } from '../draggable/index.js';
+import { DroppableComponent } from '../droppable/index.js';
+import { ListCard } from '../listCard/index.js';
 
 import './List.scss';
-import { ListCard } from '../listCard/index.js';
 
 export const List = ({
     title,
     cards,
-    onClick,
-    children
+    listId,
+    onClickAddCard,
+    onClickDeleteCard,
+    onClickDeleteList
 }) => {
-    const cardsToRender = cards.map((card) => <ListCard title={ card.title } updatedAt={ card.updatedAt }/>);
+    const cardsToRender = cards.map((card, index) => (
+        <DraggableComponent
+            draggableId={ card._id }
+            index={ index }
+            key={ card._id + index }>
+            <ListCard
+                onClickDelete={ () => onClickDeleteCard({ cardId: card._id, listId: card.listId }) }
+                title={ card.title }
+                updatedAt={ card.updatedAt }/>
+        </DraggableComponent>
+    ));
 
     return (
         <div className="list">
             <div className="list__header">
                 <h2 className="list__title">{ title }</h2>
-                <button className="list__button">
-                    <i className="fas fa-plus"></i>
+                <button className="list__button" onClick={ () => onClickDeleteList(listId) }>
+                    Delete list
                 </button>
             </div>
             <div className="list__items">
-                { cardsToRender }
+                <DroppableComponent droppableId={ listId }>
+                    { cardsToRender }
+                </DroppableComponent>
+                <button
+                    className="list__button list__button--add"
+                    onClick={ () => onClickAddCard(listId) }>ADD
+                </button>
             </div>
         </div>
     );
