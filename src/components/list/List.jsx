@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { DraggableComponent } from '../draggable/index.js';
-import { DroppableComponent } from '../droppable/index.js';
+
+import { sortByUpdatedAsc, sortByUpdatedDesc } from '../../helpers';
+import { DraggableComponent } from '../draggable';
+import { DroppableComponent } from '../droppable';
 import { ListCard } from '../listCard/index.js';
 
 import './List.scss';
@@ -19,22 +21,14 @@ export const List = ({
         setOrderBy((prevOrderBy) => (prevOrderBy === 'desc' ? 'asc' : 'desc'));
     };
 
-    const sortByUpdatedAsc = (a, b) => {
-        return new Date(b.updatedAt) - new Date(a.updatedAt);
-    };
-
-    const sortByUpdatedDesc = (a, b) => {
-        return new Date(a.updatedAt) - new Date(b.updatedAt);
-    };
-
-    const sortedCards = [...cards].sort(
+    const sortedListCards = [...cards].sort(
         orderBy === 'asc'
             ? sortByUpdatedAsc
             : sortByUpdatedDesc
     );
 
     const listCards = orderBy !== null
-        ? sortedCards
+        ? sortedListCards
         : cards;
 
     const cardsToRender = listCards.map((card, index) => {
