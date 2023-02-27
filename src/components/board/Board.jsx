@@ -25,9 +25,16 @@ export const Board = ({
             return;
         }
 
+        // It's ID of list from where you pull card
         const listIdStart = source.droppableId;
+
+        // It's ID of list where you push card
         const listIdEnd = destination.droppableId;
+
+        // It's position index from where you pull card
         const listCardIndexStart = source.index;
+
+        // It's position index where you push card
         const listCardIndexEnd = destination.index;
 
         dispatch(changeCardPosition({

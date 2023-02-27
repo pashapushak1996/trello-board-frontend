@@ -8,12 +8,20 @@ import {
 
 export const changeCardPositionReducer = (state, action) => {
     const {
+        // It's ID of list from where you pull card
         listIdStart,
-        listCardIndexStart,
+
+        // It's ID of list where you push card
         listIdEnd,
+
+        // It's position index from where you pull card
+        listCardIndexStart,
+
+        // It's position index where you push card
         listCardIndexEnd
     } = action.payload;
 
+    // If list the same
     if (listIdStart === listIdEnd) {
         const list = state.lists.find((item) => item._id === listIdStart);
 
@@ -24,6 +32,7 @@ export const changeCardPositionReducer = (state, action) => {
         return;
     }
 
+    // If list is another
     const listStart = state.lists.find((item) => item._id === listIdStart);
 
     const card = listStart.cards.splice(listCardIndexStart, 1);
@@ -31,6 +40,10 @@ export const changeCardPositionReducer = (state, action) => {
     const listEnd = state.lists.find((item) => item._id === listIdEnd);
 
     listEnd.cards.splice(listCardIndexEnd, 0, ...card);
+};
+
+const setLoadingTrue = (state) => {
+    state.loading = true;
 };
 
 export const extraReducers = {
@@ -41,9 +54,7 @@ export const extraReducers = {
         state.lists.push(...action.payload);
     },
 
-    [fetchLists.pending]: (state) => {
-        state.loading = true;
-    },
+    [fetchLists.pending]: setLoadingTrue,
 
     /* Create list reducer */
 
@@ -53,9 +64,7 @@ export const extraReducers = {
         state.lists.push(action.payload);
     },
 
-    [createList.pending]: (state) => {
-        state.loading = true;
-    },
+    [createList.pending]: setLoadingTrue,
 
     /* Delete list reducer */
 
@@ -67,9 +76,7 @@ export const extraReducers = {
         state.lists = state.lists.filter((list) => list._id !== listId);
     },
 
-    [deleteList.pending]: (state) => {
-        state.loading = true;
-    },
+    [deleteList.pending]: setLoadingTrue,
 
     /* Create card reducer */
 
@@ -83,9 +90,7 @@ export const extraReducers = {
         list.cards.push(card);
     },
 
-    [createCard.pending]: (state) => {
-        state.loading = true;
-    },
+    [createCard.pending]: setLoadingTrue,
 
     /* Delete card reducer */
 
@@ -99,7 +104,5 @@ export const extraReducers = {
         list.cards = list.cards.filter((card) => card._id !== cardId);
     },
 
-    [deleteCard.pending]: (state) => {
-        state.loading = true;
-    }
+    [deleteCard.pending]: setLoadingTrue
 };
