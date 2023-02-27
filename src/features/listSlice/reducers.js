@@ -84,7 +84,7 @@ export const extraReducers = {
     },
 
     [createCard.pending]: (state) => {
-        state.loading = false;
+        state.loading = true;
     },
 
     /* Delete card reducer */
