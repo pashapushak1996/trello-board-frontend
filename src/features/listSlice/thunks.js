@@ -5,37 +5,53 @@ import { cardApi, listApi } from '../../api/index.js';
 
 export const fetchLists = createAsyncThunk(
     'lists/fetchLists',
-    async () => {
-        const lists = await listApi.getAllLists();
+    async (thunkAPI) => {
+        try {
+            const lists = await listApi.getAllLists();
 
-        return lists;
+            return lists;
+        } catch (err) {
+            return thunkAPI.rejectWithValue({ error: err.message });
+        }
     }
 );
 
 export const createList = createAsyncThunk(
     'lists/createList',
-    async (listTitle) => {
-        const createdList = await listApi.createList(listTitle);
+    async (listTitle, thunkAPI) => {
+        try {
+            const createdList = await listApi.createList(listTitle);
 
-        return createdList;
+            return createdList;
+        } catch (err) {
+            return thunkAPI.rejectWithValue({ error: err.message });
+        }
     }
 );
 
 export const deleteList = createAsyncThunk(
     'lists/deleteList',
-    async (listId) => {
-        await listApi.deleteList(listId);
+    async (listId, thunkAPI) => {
+        try {
+            await listApi.deleteList(listId);
 
-        return listId;
+            return listId;
+        } catch (err) {
+            return thunkAPI.rejectWithValue({ error: err.message });
+        }
     }
 );
 
 export const updateList = createAsyncThunk(
     'lists/updateList',
-    async ({ listId, listTitle }) => {
-        const updatedList = await listApi.updateList(listId, listTitle);
+    async ({ listId, listTitle }, thunkAPI) => {
+        try {
+            const updatedList = await listApi.updateList(listId, listTitle);
 
-        return updatedList;
+            return updatedList;
+        } catch (err) {
+            return thunkAPI.rejectWithValue({ error: err.message });
+        }
     }
 );
 
@@ -43,18 +59,26 @@ export const updateList = createAsyncThunk(
 
 export const createCard = createAsyncThunk(
     'lists/createCard',
-    async (newTask) => {
-        const card = await cardApi.createCard(newTask.title, newTask.listId);
+    async (newTask, thunkAPI) => {
+        try {
+            const card = await cardApi.createCard(newTask.title, newTask.listId);
 
-        return card;
+            return card;
+        } catch (err) {
+            return thunkAPI.rejectWithValue({ error: err.message });
+        }
     }
 );
 
 export const deleteCard = createAsyncThunk(
     'lists/deleteCard',
-    async ({ cardId, listId }) => {
-        await cardApi.deleteCard(cardId);
+    async ({ cardId, listId }, thunkAPI) => {
+        try {
+            await cardApi.deleteCard(cardId);
 
-        return { cardId, listId };
+            return { cardId, listId };
+        } catch (err) {
+            return thunkAPI.rejectWithValue({ error: err.message });
+        }
     }
 );

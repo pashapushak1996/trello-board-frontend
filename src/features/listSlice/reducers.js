@@ -33,86 +33,51 @@ export const changeCardPositionReducer = (state, action) => {
     listEnd.cards.splice(listCardIndexEnd, 0, ...card);
 };
 
-export const extraReducers = (builder) => {
-    builder.addCase(
-        fetchLists.fulfilled,
-        (state, action) => {
-            state.loading = false;
-            state.lists.push(...action.payload);
-        }
-    );
+export const extraReducers = {
+    [fetchLists.fulfilled]: (state, action) => {
+        state.loading = false;
+        state.lists.push(...action.payload);
+    },
+    [fetchLists.pending]: (state) => {
+        state.loading = true;
+    },
+    [createList.fulfilled]: (state, action) => {
+        state.loading = false;
 
-    builder.addCase(
-        fetchLists.pending,
-        (state) => {
-            state.loading = true;
-        }
-    );
+        state.lists.push(action.payload);
+    },
+    [createList.pending]: (state) => {
+        state.loading = true;
+    },
+    [deleteList.fulfilled]: (state, action) => {
+        state.loading = false;
 
-    builder.addCase(
-        createList.fulfilled,
-        (state, action) => {
-            state.loading = false;
+        const listId = action.payload;
 
-            state.lists.push(action.payload);
-        }
-    );
+        state.lists = state.lists.filter((list) => list._id !== listId);
+    },
+    [deleteList.pending]: (state) => {
+        state.loading = true;
+    },
+    [createCard.fulfilled]: (state, action) => {
+        state.loading = false;
 
-    builder.addCase(
-        createList.pending,
-        (state) => {
-            state.loading = true;
-        }
-    );
+        const card = action.payload;
 
-    builder.addCase(
-        deleteList.fulfilled,
-        (state, action) => {
-            state.loading = false;
+        const list = state.lists.find((item) => item._id === card.listId);
 
-            const listId = action.payload;
+        list.cards.push(card);
+    },
+    [deleteCard.fulfilled]: (state, action) => {
+        state.loading = false;
 
-            state.lists = state.lists.filter((list) => list._id !== listId);
-        }
-    );
+        const { cardId, listId } = action.payload;
 
-    builder.addCase(
-        deleteList.pending,
-        (state) => {
-            state.loading = true;
-        }
-    );
+        const list = state.lists.find((item) => item._id === listId);
 
-    builder.addCase(
-        createCard.fulfilled,
-        (state, action) => {
-            state.loading = false;
-
-            const card = action.payload;
-
-            const list = state.lists.find((item) => item._id === card.listId);
-
-            list.cards.push(card);
-        }
-    );
-
-    builder.addCase(
-        deleteCard.fulfilled,
-        (state, action) => {
-            state.loading = false;
-
-            const { cardId, listId } = action.payload;
-
-            const list = state.lists.find((item) => item._id === listId);
-
-            list.cards = list.cards.filter((card) => card._id !== cardId);
-        }
-    );
-
-    builder.addCase(
-        deleteCard.pending,
-        (state) => {
-            state.loading = true;
-        }
-    );
+        list.cards = list.cards.filter((card) => card._id !== cardId);
+    },
+    [deleteCard.pending]: (state) => {
+        state.loading = true;
+    }
 };
