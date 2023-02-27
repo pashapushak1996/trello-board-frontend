@@ -2,7 +2,7 @@ import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCardPosition, getLists, getLoading } from '../../features/list';
+import { changeCardPosition, getLists, getLoading } from '../../features/listSlice';
 
 import { List } from '../list/index.js';
 

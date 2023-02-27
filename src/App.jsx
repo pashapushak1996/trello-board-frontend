@@ -7,7 +7,7 @@ import { CustomModal } from './components/modal/index.js';
 
 import {
     createCard, createList, deleteCard, deleteList, fetchLists
-} from './features/list';
+} from './features/listSlice';
 
 function App() {
     const dispatch = useDispatch();
