@@ -1,35 +1,34 @@
 import {
     createCard,
-    createList, deleteCard, deleteList,
+    createList,
+    deleteCard,
+    deleteList,
     fetchLists
-
 } from './thunks';
 
 export const changeCardPositionReducer = (state, action) => {
     const {
-        droppableIdStart,
-        droppableIndexStart,
-        droppableIdEnd,
-        droppableIndexEnd,
+        listIdStart,
+        listCardIndexStart,
+        listIdEnd,
+        listCardIndexEnd,
     } = action.payload;
 
-    if (droppableIdStart === droppableIdEnd) {
-        const list = state.lists.find((item) => item._id === droppableIdStart);
+    if (listIdStart === listIdEnd) {
+        const list = state.lists.find((item) => item._id === listIdStart);
 
-        const card = list.cards.splice(droppableIndexStart, 1);
+        const card = list.cards.splice(listCardIndexStart, 1);
 
-        list.cards.splice(droppableIndexEnd, 0, ...card);
-
-        return;
+        list.cards.splice(listCardIndexEnd, 0, ...card);
     }
 
-    const listStart = state.lists.find((item) => item._id === droppableIdStart);
+    const listStart = state.lists.find((item) => item._id === listIdStart);
 
-    const card = listStart.cards.splice(droppableIndexStart, 1);
+    const card = listStart.cards.splice(listCardIndexStart, 1);
 
-    const listEnd = state.lists.find((item) => item._id === droppableIdEnd);
+    const listEnd = state.lists.find((item) => item._id === listIdEnd);
 
-    listEnd.cards.splice(droppableIndexEnd, 0, ...card);
+    listEnd.cards.splice(listCardIndexEnd, 0, ...card);
 };
 
 export const extraReducers = (builder) => {
@@ -65,7 +64,18 @@ export const extraReducers = (builder) => {
     );
 
     builder.addCase(
-        createCard.pending,
+        deleteList.fulfilled,
+        (state, action) => {
+            state.loading = false;
+
+            const listId = action.payload;
+
+            state.lists = state.lists.filter((list) => list._id !== listId);
+        }
+    );
+
+    builder.addCase(
+        deleteList.pending,
         (state) => {
             state.loading = true;
         }
@@ -83,30 +93,6 @@ export const extraReducers = (builder) => {
             list.cards.push(card);
         }
     );
-    builder.addCase(
-        deleteList.pending,
-        (state) => {
-            state.loading = true;
-        }
-    );
-
-    builder.addCase(
-        deleteList.fulfilled,
-        (state, action) => {
-            state.loading = false;
-
-            const listId = action.payload;
-
-            state.lists = state.lists.filter((list) => list._id !== listId);
-        }
-    );
-
-    builder.addCase(
-        deleteCard.pending,
-        (state) => {
-            state.loading = true;
-        }
-    );
 
     builder.addCase(
         deleteCard.fulfilled,
@@ -118,6 +104,13 @@ export const extraReducers = (builder) => {
             const list = state.lists.find((item) => item._id === listId);
 
             list.cards = list.cards.filter((card) => card._id !== cardId);
+        }
+    );
+
+    builder.addCase(
+        deleteCard.pending,
+        (state) => {
+            state.loading = true;
         }
     );
 };
