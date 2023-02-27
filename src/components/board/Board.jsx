@@ -2,7 +2,7 @@ import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { Col, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeCardPosition, getLoading } from '../../features/listSlice.js';
+import { changeCardPosition, getLists, getLoading } from '../../features/list';
 
 import { List } from '../list/index.js';
 
@@ -10,13 +10,13 @@ import './Board.scss';
 import { Loader } from '../loader/index.js';
 
 export const Board = ({
-    lists,
     onClickAddCard,
     onClickDeleteCard,
     onClickDeleteList
 }) => {
     const dispatch = useDispatch();
     const loading = useSelector(getLoading);
+    const lists = useSelector(getLists);
 
     const onDragEnd = (result) => {
         const { destination, source } = result;
@@ -50,14 +50,7 @@ export const Board = ({
         };
 
         return (
-            <Col
-                key={ list._id }
-                className="mb-4"
-                xs={ 6 }
-                sm={ 6 }
-                md={ 4 }
-                lg={ 3 }
-            >
+            <Col key={ list._id } className="mb-4" xs={ 6 } sm={ 6 } md={ 4 } lg={ 3 }>
                 <List
                     onClickDeleteCard={ onClickDeleteCard }
                     onClickAddCard={ handleOnClickAddCard }

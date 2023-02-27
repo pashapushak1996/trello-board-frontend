@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { Board } from './components/board/Board.jsx';
 import { Header } from './components/header/index.js';
 import { CustomModal } from './components/modal/index.js';
 
 import {
-    createCard, createList, deleteCard, deleteList, fetchLists, getLists
-} from './features/listSlice.js';
+    createCard, createList, deleteCard, deleteList, fetchLists
+} from './features/list';
 
 function App() {
     const dispatch = useDispatch();
-    const lists = useSelector(getLists);
 
     const [newCard, setNewCard] = useState({
         title: '',
@@ -88,16 +87,16 @@ function App() {
             handleShow={ toggleModalVisibility }
             onClickCreate={ onClickCreate }
             title={ 'What is the task?' }>
-            <input type="text"
-                   className={ 'form-text' }
-                   value={ newCard.title }
-                   onChange={ onCardTitleChange }/>
+            <input
+                type="text"
+                className={ 'form-text' }
+                value={ newCard.title }
+                onChange={ onCardTitleChange }/>
         </CustomModal>
         <Board
             onClickAddCard={ onClickAddCard }
             onClickDeleteCard={ onClickDeleteCard }
-            onClickDeleteList={ onClickDeleteList }
-            lists={ lists }/>
+            onClickDeleteList={ onClickDeleteList }/>
     </div>;
 }
 
