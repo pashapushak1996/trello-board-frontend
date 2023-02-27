@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Board } from './components/board/Board.jsx';
 import { Header } from './components/header/index.js';
 import { CustomModal } from './components/modal/index.js';
+
 import {
     createCard, createList, deleteCard, deleteList, fetchLists, getLists
 } from './features/listSlice.js';
@@ -12,31 +13,34 @@ function App() {
     const dispatch = useDispatch();
     const lists = useSelector(getLists);
 
-    const [newTask, setNewTask] = useState({
+    const [newCard, setNewCard] = useState({
         title: '',
         listId: null
     });
 
     const [newListTitle, setNewListTitle] = useState('');
 
-    const onListTitleChange = (e) => {
-        const { value } = e.target;
-
-        setNewListTitle(value);
-    };
-
-    const onClickAddList = () => {
-        if (newListTitle) {
-            dispatch(createList(newListTitle));
-        }
-        setNewListTitle('');
-    };
-
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         dispatch(fetchLists());
     }, [dispatch]);
+
+    const onClickAddList = () => {
+        const listTitle = newListTitle.trim();
+
+        if (listTitle) {
+            dispatch(createList(listTitle));
+        }
+
+        setNewListTitle('');
+    };
+
+    const onListTitleChange = (e) => {
+        const { value } = e.target;
+
+        setNewListTitle(value);
+    };
 
     const toggleModalVisibility = () => {
         setShowModal((prevState) => !prevState);
@@ -45,27 +49,29 @@ function App() {
     const onClickAddCard = (listId) => {
         toggleModalVisibility();
 
-        setNewTask({ ...newTask, listId });
+        setNewCard({ ...newCard, listId });
     };
 
     const onClickDeleteCard = (cardId, listId) => {
         dispatch(deleteCard(cardId, listId));
     };
 
-    const onTaskTitleChange = (e) => {
+    const onCardTitleChange = (e) => {
         const { value } = e.target;
 
-        setNewTask({ ...newTask, title: value });
+        setNewCard({ ...newCard, title: value });
     };
 
     const onClickCreate = () => {
         toggleModalVisibility();
 
-        if (newTask.title) {
-            dispatch(createCard(newTask));
+        const cardTitle = newCard.title.trim();
+
+        if (cardTitle) {
+            dispatch(createCard(newCard));
         }
 
-        setNewTask({ title: '', listId: null });
+        setNewCard({ title: '', listId: null });
     };
 
     const onClickDeleteList = (listId) => {
@@ -82,7 +88,10 @@ function App() {
             handleShow={ toggleModalVisibility }
             onClickCreate={ onClickCreate }
             title={ 'What is the task?' }>
-            <input type="text" value={ newTask.title } onChange={ onTaskTitleChange }/>
+            <input type="text"
+                   className={ 'form-text' }
+                   value={ newCard.title }
+                   onChange={ onCardTitleChange }/>
         </CustomModal>
         <Board
             onClickAddCard={ onClickAddCard }

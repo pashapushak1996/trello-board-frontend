@@ -3,15 +3,25 @@ import { cardApi, listApi } from '../api/index.js';
 
 const initialState = {
     lists: [],
-    loading: false
+    loading: false,
 };
+
+/* List thunks */
+
+export const fetchLists = createAsyncThunk(
+    'lists/fetchLists',
+    async () => {
+        const lists = await listApi.getAllLists();
+        return lists;
+    }
+);
 
 export const createList = createAsyncThunk(
     'lists/createList',
     async (listTitle) => {
-        const list = await listApi.createList(listTitle);
+        const createdList = await listApi.createList(listTitle);
 
-        return list;
+        return createdList;
     }
 );
 
@@ -23,6 +33,17 @@ export const deleteList = createAsyncThunk(
         return listId;
     }
 );
+
+export const updateList = createAsyncThunk(
+    'lists/updateList',
+    async ({ listId, listTitle }) => {
+        const updatedList = await listApi.updateList(listId, listTitle);
+
+        return updatedList;
+    }
+);
+
+/* Card thunks */
 
 export const createCard = createAsyncThunk(
     'lists/createCard',
@@ -39,14 +60,6 @@ export const deleteCard = createAsyncThunk(
         await cardApi.deleteCard(cardId);
 
         return { cardId, listId };
-    }
-);
-
-export const fetchLists = createAsyncThunk(
-    'lists/fetchLists',
-    async () => {
-        const lists = await listApi.getAllLists();
-        return lists;
     }
 );
 
@@ -101,6 +114,7 @@ const listSlice = createSlice({
             createList.fulfilled,
             (state, action) => {
                 state.loading = false;
+
                 state.lists.push(action.payload);
             }
         );
@@ -175,6 +189,7 @@ const listSlice = createSlice({
 export const getLists = (state) => state.lists.lists;
 export const getLoading = (state) => state.lists.loading;
 
+// Actions
 export const { changeCardPosition } = listSlice.actions;
 
 export default listSlice.reducer;

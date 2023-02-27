@@ -39,12 +39,29 @@ export const Board = ({
     };
 
     const listsToRender = lists.map((list) => {
+        const { _id: listId } = list;
+
+        const handleOnClickDeleteList = () => {
+            onClickDeleteList(listId);
+        };
+
+        const handleOnClickAddCard = () => {
+            onClickAddCard(listId);
+        };
+
         return (
-            <Col key={ list._id } xs={ 6 } sm={ 6 } md={ 4 } lg={ 3 } className="mb-4">
+            <Col
+                key={ list._id }
+                className="mb-4"
+                xs={ 6 }
+                sm={ 6 }
+                md={ 4 }
+                lg={ 3 }
+            >
                 <List
                     onClickDeleteCard={ onClickDeleteCard }
-                    onClickAddCard={ onClickAddCard }
-                    onClickDeleteList={ onClickDeleteList }
+                    onClickAddCard={ handleOnClickAddCard }
+                    onClickDeleteList={ handleOnClickDeleteList }
                     title={ list.title }
                     cards={ list.cards }
                     listId={ list._id }/>

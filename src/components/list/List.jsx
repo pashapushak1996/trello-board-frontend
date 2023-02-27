@@ -13,23 +13,27 @@ export const List = ({
     onClickDeleteCard,
     onClickDeleteList
 }) => {
-    const cardsToRender = cards.map((card, index) => (
-        <DraggableComponent
+    const cardsToRender = cards.map((card, index) => {
+        const handleOnClickCardDelete = () => {
+            onClickDeleteCard({ cardId: card._id, listId: card.listId });
+        };
+
+        return <DraggableComponent
             draggableId={ card._id }
             index={ index }
             key={ card._id + index }>
             <ListCard
-                onClickDelete={ () => onClickDeleteCard({ cardId: card._id, listId: card.listId }) }
+                onClickDelete={ handleOnClickCardDelete }
                 title={ card.title }
                 updatedAt={ card.updatedAt }/>
-        </DraggableComponent>
-    ));
+        </DraggableComponent>;
+    });
 
     return (
         <div className="list">
             <div className="list__header">
                 <h2 className="list__title">{ title }</h2>
-                <button className="list__button" onClick={ () => onClickDeleteList(listId) }>
+                <button className="list__button" onClick={ onClickDeleteList }>
                     Delete list
                 </button>
             </div>
@@ -39,7 +43,8 @@ export const List = ({
                 </DroppableComponent>
                 <button
                     className="list__button list__button--add"
-                    onClick={ () => onClickAddCard(listId) }>ADD
+                    onClick={ onClickAddCard }>
+                    ADD
                 </button>
             </div>
         </div>
