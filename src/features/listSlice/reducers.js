@@ -46,41 +46,40 @@ const setLoadingTrue = (state) => {
     state.loading = true;
 };
 
-export const extraReducers = {
-    /* Fetch list reducer */
+export const extraReducers = (builder) => {
+    /* Fetch list  */
 
-    [fetchLists.fulfilled]: (state, action) => {
+    builder.addCase(fetchLists.fulfilled, (state, action) => {
         state.loading = false;
         state.lists.push(...action.payload);
-    },
+    },);
 
-    [fetchLists.pending]: setLoadingTrue,
+    builder.addCase(fetchLists.pending, setLoadingTrue);
 
-    /* Create list reducer */
+    /* Create list  */
 
-    [createList.fulfilled]: (state, action) => {
+    builder.addCase(createList.fulfilled, (state, action) => {
         state.loading = false;
 
         state.lists.push(action.payload);
-    },
+    });
 
-    [createList.pending]: setLoadingTrue,
+    builder.addCase(createList.pending, setLoadingTrue);
 
-    /* Delete list reducer */
+    /* Delete list  */
 
-    [deleteList.fulfilled]: (state, action) => {
+    builder.addCase(deleteList.fulfilled, (state, action) => {
         state.loading = false;
 
         const listId = action.payload;
 
         state.lists = state.lists.filter((list) => list._id !== listId);
-    },
+    });
+    builder.addCase(deleteList.pending, setLoadingTrue);
 
-    [deleteList.pending]: setLoadingTrue,
+    /* Create card  */
 
-    /* Create card reducer */
-
-    [createCard.fulfilled]: (state, action) => {
+    builder.addCase(createCard.fulfilled, (state, action) => {
         state.loading = false;
 
         const card = action.payload;
@@ -88,13 +87,13 @@ export const extraReducers = {
         const list = state.lists.find((item) => item._id === card.listId);
 
         list.cards.push(card);
-    },
+    },);
 
-    [createCard.pending]: setLoadingTrue,
+    builder.addCase(createCard.pending, setLoadingTrue);
 
-    /* Delete card reducer */
+    /* Delete card  */
 
-    [deleteCard.fulfilled]: (state, action) => {
+    builder.addCase(deleteCard.fulfilled, (state, action) => {
         state.loading = false;
 
         const { cardId, listId } = action.payload;
@@ -102,7 +101,7 @@ export const extraReducers = {
         const list = state.lists.find((item) => item._id === listId);
 
         list.cards = list.cards.filter((card) => card._id !== cardId);
-    },
+    });
 
-    [deleteCard.pending]: setLoadingTrue
+    builder.addCase(deleteCard.pending, setLoadingTrue);
 };

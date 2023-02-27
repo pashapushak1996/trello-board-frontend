@@ -11,28 +11,31 @@ export const List = ({
     listId,
     onClickAddCard,
     onClickDeleteCard,
-    onClickDeleteList
+    onClickDeleteList,
 }) => {
     const cardsToRender = cards.map((card, index) => {
         const handleOnClickCardDelete = () => {
             onClickDeleteCard({ cardId: card._id, listId: card.listId });
         };
 
-        return <DraggableComponent
-            draggableId={ card._id }
-            index={ index }
-            key={ card._id + index }>
-            <ListCard
-                onClickDelete={ handleOnClickCardDelete }
-                title={ card.title }
-                updatedAt={ card.updatedAt }/>
-        </DraggableComponent>;
+        return (
+            <DraggableComponent
+                draggableId={ card._id }
+                index={ index }
+                key={ card._id + index }>
+                <ListCard
+                    onClickDelete={ handleOnClickCardDelete }
+                    title={ card.title }
+                    updatedAt={ card.updatedAt }/>
+            </DraggableComponent>
+        );
     });
 
     return (
         <div className="list">
             <div className="list__header">
                 <h2 className="list__title">{ title }</h2>
+                <button className="list__button">Sort</button>
                 <button className="list__button" onClick={ onClickDeleteList }>
                     Delete list
                 </button>
