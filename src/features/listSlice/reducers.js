@@ -34,6 +34,8 @@ export const changeCardPositionReducer = (state, action) => {
 };
 
 export const extraReducers = {
+    /* Fetch list reducer */
+
     [fetchLists.fulfilled]: (state, action) => {
         state.loading = false;
         state.lists.push(...action.payload);
@@ -41,14 +43,21 @@ export const extraReducers = {
     [fetchLists.pending]: (state) => {
         state.loading = true;
     },
+
+    /* Create list reducer */
+
     [createList.fulfilled]: (state, action) => {
         state.loading = false;
 
         state.lists.push(action.payload);
     },
+
     [createList.pending]: (state) => {
         state.loading = true;
     },
+
+    /* Delete list reducer */
+
     [deleteList.fulfilled]: (state, action) => {
         state.loading = false;
 
@@ -59,6 +68,9 @@ export const extraReducers = {
     [deleteList.pending]: (state) => {
         state.loading = true;
     },
+
+    /* Create card reducer */
+
     [createCard.fulfilled]: (state, action) => {
         state.loading = false;
 
@@ -68,6 +80,9 @@ export const extraReducers = {
 
         list.cards.push(card);
     },
+
+    /* Delete card reducer */
+
     [deleteCard.fulfilled]: (state, action) => {
         state.loading = false;
 
