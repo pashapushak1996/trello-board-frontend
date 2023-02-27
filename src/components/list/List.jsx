@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { DraggableComponent } from '../draggable/index.js';
 import { DroppableComponent } from '../droppable/index.js';
 import { ListCard } from '../listCard/index.js';
@@ -13,7 +13,31 @@ export const List = ({
     onClickDeleteCard,
     onClickDeleteList,
 }) => {
-    const cardsToRender = cards.map((card, index) => {
+    const [orderBy, setOrderBy] = useState(null);
+
+    const onClickSortCards = () => {
+        setOrderBy((prevOrderBy) => (prevOrderBy === 'desc' ? 'asc' : 'desc'));
+    };
+
+    const sortByUpdatedAsc = (a, b) => {
+        return new Date(b.updatedAt) - new Date(a.updatedAt);
+    };
+
+    const sortByUpdatedDesc = (a, b) => {
+        return new Date(a.updatedAt) - new Date(b.updatedAt);
+    };
+
+    const sortedCards = [...cards].sort(
+        orderBy === 'asc'
+            ? sortByUpdatedAsc
+            : sortByUpdatedDesc
+    );
+
+    const listCards = orderBy !== null
+        ? sortedCards
+        : cards;
+
+    const cardsToRender = listCards.map((card, index) => {
         const handleOnClickCardDelete = () => {
             onClickDeleteCard({ cardId: card._id, listId: card.listId });
         };
@@ -35,7 +59,7 @@ export const List = ({
         <div className="list">
             <div className="list__header">
                 <h2 className="list__title">{ title }</h2>
-                <button className="list__button">Sort</button>
+                <button className="list__button" onClick={ onClickSortCards }>Sort</button>
                 <button className="list__button" onClick={ onClickDeleteList }>
                     Delete list
                 </button>
