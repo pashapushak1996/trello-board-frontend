@@ -40,6 +40,7 @@ export const extraReducers = {
         state.loading = false;
         state.lists.push(...action.payload);
     },
+
     [fetchLists.pending]: (state) => {
         state.loading = true;
     },
@@ -65,6 +66,7 @@ export const extraReducers = {
 
         state.lists = state.lists.filter((list) => list._id !== listId);
     },
+
     [deleteList.pending]: (state) => {
         state.loading = true;
     },
@@ -81,6 +83,10 @@ export const extraReducers = {
         list.cards.push(card);
     },
 
+    [createCard.pending]: (state) => {
+        state.loading = false;
+    },
+
     /* Delete card reducer */
 
     [deleteCard.fulfilled]: (state, action) => {
@@ -92,6 +98,7 @@ export const extraReducers = {
 
         list.cards = list.cards.filter((card) => card._id !== cardId);
     },
+
     [deleteCard.pending]: (state) => {
         state.loading = true;
     }

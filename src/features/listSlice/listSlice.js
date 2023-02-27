@@ -4,8 +4,7 @@ import { changeCardPositionReducer, extraReducers } from './reducers';
 
 const initialState = {
     lists: [],
-    loading: false,
-    error: null
+    loading: false
 };
 
 const listSlice = createSlice({
