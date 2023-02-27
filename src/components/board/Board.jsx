@@ -25,16 +25,16 @@ export const Board = ({
             return;
         }
 
-        const droppableIdStart = source.droppableId;
-        const droppableIdEnd = destination.droppableId;
-        const droppableIndexStart = source.index;
-        const droppableIndexEnd = destination.index;
+        const listIdStart = source.droppableId;
+        const listIdEnd = destination.droppableId;
+        const listCardIndexStart = source.index;
+        const listCardIndexEnd = destination.index;
 
         dispatch(changeCardPosition({
-            droppableIdStart,
-            droppableIndexStart,
-            droppableIdEnd,
-            droppableIndexEnd
+            listIdStart,
+            listCardIndexStart,
+            listIdEnd,
+            listCardIndexEnd
         }));
     };
 

@@ -11,7 +11,7 @@ export const changeCardPositionReducer = (state, action) => {
         listIdStart,
         listCardIndexStart,
         listIdEnd,
-        listCardIndexEnd,
+        listCardIndexEnd
     } = action.payload;
 
     if (listIdStart === listIdEnd) {
@@ -20,6 +20,8 @@ export const changeCardPositionReducer = (state, action) => {
         const card = list.cards.splice(listCardIndexStart, 1);
 
         list.cards.splice(listCardIndexEnd, 0, ...card);
+
+        return;
     }
 
     const listStart = state.lists.find((item) => item._id === listIdStart);
