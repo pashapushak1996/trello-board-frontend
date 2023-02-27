@@ -93,7 +93,7 @@ function App() {
             title={ 'What is the task?' }>
             <input
                 type="text"
-                className={'d-flex p-1 w-100 border-0'}
+                className={'d-flex p-1 w-100 rounded-3 border-secondary border-opacity-50'}
                 value={ newCard.title }
                 onChange={ onCardTitleChange }/>
         </CustomModal>
