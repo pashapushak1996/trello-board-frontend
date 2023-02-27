@@ -19,15 +19,6 @@ export const listApi = {
             console.log(e);
         }
     },
-    updateList: async (listId, title,) => {
-        try {
-            const res = await apiInstance.put(`/lists/${ listId }`, { title });
-
-            return res.data;
-        } catch (e) {
-            console.log(e);
-        }
-    },
     deleteList: async (listId) => {
         try {
             const res = await apiInstance.delete(`/lists/${ listId }`);
